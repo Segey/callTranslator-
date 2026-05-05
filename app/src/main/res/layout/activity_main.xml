@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Переводчик звонков"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Испанский → Русский"
+        android:textSize="14sp"
+        android:textColor="#888888"
+        android:layout_marginBottom="32dp" />
+
+    <!-- Enable/disable toggle -->
+    <Switch
+        android:id="@+id/enableSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Переводчик включён"
+        android:textSize="16sp"
+        android:layout_marginBottom="32dp" />
+
+    <!-- Status block -->
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Проверка разрешений..."
+        android:textSize="14sp"
+        android:background="#F5F5F5"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Request permissions button -->
+    <Button
+        android:id="@+id/permissionsBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Выдать разрешения"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Overlay permission button -->
+    <Button
+        android:id="@+id/overlayPermissionBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Разрешить overlay"
+        android:layout_marginBottom="32dp" />
+
+    <!-- Instructions -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Как пользоваться:\n1. Выдай все разрешения выше\n2. Включи переключатель\n3. Когда звонят — бери трубку\n4. Включи громкую связь\n5. Перевод появится на экране автоматически"
+        android:textSize="13sp"
+        android:textColor="#555555"
+        android:lineSpacingExtra="4dp" />
+
+</LinearLayout>
