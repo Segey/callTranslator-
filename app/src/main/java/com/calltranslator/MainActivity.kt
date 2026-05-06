@@ -8,8 +8,8 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.Button
-import android.widget.Switch
 import android.widget.TextView
+import androidx.appcompat.widget.SwitchCompat
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +18,7 @@ import androidx.core.content.ContextCompat
 class MainActivity : AppCompatActivity() {
 
     private lateinit var statusText: TextView
-    private lateinit var enableSwitch: Switch
+    private lateinit var enableSwitch: SwitchCompat
     private lateinit var overlayBtn: Button
     private lateinit var permissionsBtn: Button
 
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         statusText = findViewById(R.id.statusText)
-        enableSwitch = findViewById(R.id.enableSwitch)
+        enableSwitch = findViewById<SwitchCompat>(R.id.enableSwitch)
         overlayBtn = findViewById(R.id.overlayPermissionBtn)
         permissionsBtn = findViewById(R.id.permissionsBtn)
 
