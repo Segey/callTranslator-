@@ -255,6 +255,7 @@ class TranslationService : Service() {
 
     // ---- AUDIO RECORDING ----
 
+    @Suppress("DEPRECATION")
     private fun startAudioRecording() {
         try {
             val dir = File(getExternalFilesDir(null), "recordings")
@@ -263,12 +264,12 @@ class TranslationService : Service() {
                 .format(Date())
             audioFile = File(dir, "call_$timestamp.mp4")
 
-            @Suppress("DEPRECATION")
-            mediaRecorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val recorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 MediaRecorder(this)
             } else {
                 MediaRecorder()
-            }.apply {
+            }
+            mediaRecorder = recorder.apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
                 setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                 setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
