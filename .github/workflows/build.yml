@@ -38,11 +38,16 @@ jobs:
         run: gradle assembleDebug --no-daemon --stacktrace --info 2>&1 | tail -100
 
       - name: Find APK
-        run: find . -name "*.apk" 2>/dev/null
+        run: |
+          echo "=== Searching for APK files ==="
+          find . -name "*.apk" -type f 2>/dev/null
+          echo "=== Build outputs ==="
+          find . -path "*/build/outputs*" -type f 2>/dev/null | head -20
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: CallTranslator-debug
-          path: "**/*.apk"
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: warn
           retention-days: 7
