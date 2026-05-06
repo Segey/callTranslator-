@@ -22,11 +22,16 @@ jobs:
       - name: Install Gradle 8.4
         run: |
           wget -q https://services.gradle.org/distributions/gradle-8.4-bin.zip -O /tmp/gradle.zip
-          unzip -q /tmp/gradle.zip -d /opt
+          python3 -c "import zipfile; zipfile.ZipFile('/tmp/gradle.zip').extractall('/opt')"
           echo "/opt/gradle-8.4/bin" >> $GITHUB_PATH
 
+      - name: Install Android SDK platform 34
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null 2>&1 || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0" > /dev/null 2>&1
+
       - name: Build debug APK
-        run: gradle assembleDebug --no-daemon --stacktrace
+        run: gradle assembleDebug --no-daemon --stacktrace 2>&1
         env:
           ANDROID_HOME: /usr/local/lib/android/sdk
 
