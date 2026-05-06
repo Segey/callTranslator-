@@ -35,19 +35,22 @@ jobs:
           echo "/opt/gradle-8.4/bin" >> $GITHUB_PATH
 
       - name: Build debug APK
-        run: gradle assembleDebug --no-daemon --stacktrace --info 2>&1 | tail -100
+        run: gradle :app:assembleDebug --no-daemon --stacktrace 2>&1
 
-      - name: Find APK
+      - name: Verify APK exists
         run: |
-          echo "=== Searching for APK files ==="
-          find . -name "*.apk" -type f 2>/dev/null
-          echo "=== Build outputs ==="
-          find . -path "*/build/outputs*" -type f 2>/dev/null | head -20
+          APK="app/build/outputs/apk/debug/app-debug.apk"
+          if [ -f "$APK" ]; then
+            echo "APK found: $APK ($(du -h $APK | cut -f1))"
+          else
+            echo "APK not found, searching..."
+            find . -name "*.apk" -type f 2>/dev/null
+            exit 1
+          fi
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: CallTranslator-debug
           path: app/build/outputs/apk/debug/app-debug.apk
-          if-no-files-found: warn
           retention-days: 7
