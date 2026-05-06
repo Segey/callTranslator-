@@ -19,11 +19,13 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install Android platform 34
-        run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
+      - name: Accept Android SDK licenses and install platform 34
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null 2>&1 || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager \
+            "platforms;android-34" \
+            "build-tools;34.0.0" \
+            "platform-tools" > /dev/null 2>&1
 
       - name: Create local.properties
         run: echo "sdk.dir=$ANDROID_HOME" > local.properties
@@ -36,6 +38,8 @@ jobs:
 
       - name: Build debug APK
         run: gradle :app:assembleDebug --no-daemon --stacktrace 2>&1 | tee /tmp/build.log; exit ${PIPESTATUS[0]}
+        env:
+          ANDROID_HOME: ${{ env.ANDROID_HOME }}
 
       - name: Upload build log on failure
         if: failure()
@@ -45,16 +49,10 @@ jobs:
           path: /tmp/build.log
           retention-days: 1
 
-      - name: Verify APK exists
+      - name: Verify and upload APK
         run: |
           APK="app/build/outputs/apk/debug/app-debug.apk"
-          if [ -f "$APK" ]; then
-            echo "APK found: $APK ($(du -h $APK | cut -f1))"
-          else
-            echo "APK not found, searching..."
-            find . -name "*.apk" -type f 2>/dev/null
-            exit 1
-          fi
+          ls -lh "$APK"
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
