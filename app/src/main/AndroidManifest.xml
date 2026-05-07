@@ -14,7 +14,6 @@
 
     <!-- Foreground service (keeps running during call) -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_PHONE_CALL" />
 
     <!-- Network for STT + translation API -->
@@ -75,7 +74,7 @@
         <service
             android:name=".TranslationService"
             android:exported="false"
-            android:foregroundServiceType="microphone|phoneCall" />
+            android:foregroundServiceType="phoneCall" />
 
     </application>
 
