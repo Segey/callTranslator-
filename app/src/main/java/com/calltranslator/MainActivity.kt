@@ -35,9 +35,7 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.RequestMultiplePermissions()
     ) { results ->
         val allGranted = results.values.all { it }
-        if (allGranted) {
-            checkOverlayPermission()
-        } else {
+        if (!allGranted) {
             Toast.makeText(this, "Все разрешения необходимы для работы", Toast.LENGTH_LONG).show()
         }
         updateStatus()
