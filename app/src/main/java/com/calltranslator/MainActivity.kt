@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var enableSwitch: SwitchCompat
     private lateinit var overlayBtn: Button
     private lateinit var permissionsBtn: Button
+    private lateinit var testBtn: Button
+    private lateinit var stopBtn: Button
 
     private val requiredPermissions = mutableListOf(
         Manifest.permission.RECORD_AUDIO,
@@ -49,6 +51,8 @@ class MainActivity : AppCompatActivity() {
         enableSwitch = findViewById<SwitchCompat>(R.id.enableSwitch)
         overlayBtn = findViewById(R.id.overlayPermissionBtn)
         permissionsBtn = findViewById(R.id.permissionsBtn)
+        testBtn = findViewById(R.id.testBtn)
+        stopBtn = findViewById(R.id.stopBtn)
 
         permissionsBtn.setOnClickListener {
             permissionLauncher.launch(requiredPermissions)
@@ -60,6 +64,22 @@ class MainActivity : AppCompatActivity() {
                 Uri.parse("package:$packageName")
             )
             startActivity(intent)
+        }
+
+        testBtn.setOnClickListener {
+            val intent = Intent(this, TranslationService::class.java).apply {
+                action = TranslationService.ACTION_START
+            }
+            startForegroundService(intent)
+            Toast.makeText(this, "Сервис запущен — overlay должен появиться", Toast.LENGTH_SHORT).show()
+        }
+
+        stopBtn.setOnClickListener {
+            val intent = Intent(this, TranslationService::class.java).apply {
+                action = TranslationService.ACTION_STOP
+            }
+            startService(intent)
+            Toast.makeText(this, "Сервис остановлен", Toast.LENGTH_SHORT).show()
         }
 
         enableSwitch.setOnCheckedChangeListener { _, isChecked ->

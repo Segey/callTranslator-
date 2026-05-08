@@ -56,6 +56,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Разрешить overlay"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Test button: manually trigger overlay without a call -->
+    <Button
+        android:id="@+id/testBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Тест оверлея (запустить вручную)"
+        android:backgroundTint="#FF9800"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/stopBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Остановить"
+        android:backgroundTint="#F44336"
         android:layout_marginBottom="32dp" />
 
     <!-- Instructions -->
